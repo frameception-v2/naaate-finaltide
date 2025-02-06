@@ -22,17 +22,70 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
-function ExampleCard() {
+function CountdownCard() {
+  const [timeLeft, setTimeLeft] = useState({
+    days: '0',
+    hours: '0',
+    minutes: '0',
+    seconds: '0'
+  });
+
+  const calculateTimeLeft = useCallback(() => {
+    const now = Date.now();
+    const difference = COUNTDOWN_DATE - now;
+    
+    if (difference > 0) {
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      return {
+        days: days.toString().padStart(2, '0'),
+        hours: hours.toString().padStart(2, '0'),
+        minutes: minutes.toString().padStart(2, '0'),
+        seconds: seconds.toString().padStart(2, '0')
+      };
+    }
+
+    return { days: '00', hours: '00', minutes: '00', seconds: '00' };
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [calculateTimeLeft]);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
+        <CardTitle>Final Tide Countdown</CardTitle>
         <CardDescription>
-          This is an example card that you can customize or remove
+          Time remaining until end of Feb 26, 2025 PT
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Label>Place content in a Card here.</Label>
+        <div className="grid grid-cols-4 gap-4 text-center">
+          <div>
+            <div className="text-2xl font-bold">{timeLeft.days}</div>
+            <div className="text-sm text-muted-foreground">Days</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold">{timeLeft.hours}</div>
+            <div className="text-sm text-muted-foreground">Hours</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold">{timeLeft.minutes}</div>
+            <div className="text-sm text-muted-foreground">Minutes</div>
+          </div>
+          <div>
+            <div className="text-2xl font-bold">{timeLeft.seconds}</div>
+            <div className="text-sm text-muted-foreground">Seconds</div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
@@ -140,7 +193,7 @@ export default function Frame() {
         <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
           {PROJECT_TITLE}
         </h1>
-        <ExampleCard />
+        <CountdownCard />
       </div>
     </div>
   );
