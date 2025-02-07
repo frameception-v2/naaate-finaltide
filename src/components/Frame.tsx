@@ -62,9 +62,9 @@ function CountdownCard() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Final Tide Countdown</CardTitle>
+        <CardTitle>Finish LUM Agentic MVP</CardTitle>
         <CardDescription>
-          Time remaining until end of Feb 26, 2025 PT
+          Time remaining to complete LUM Agentic MVP
         </CardDescription>
       </CardHeader>
       <CardContent>

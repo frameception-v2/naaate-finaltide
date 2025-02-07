@@ -20,8 +20,8 @@ export default async function Image() {
   return new ImageResponse(
     (
       <div tw="h-full w-full flex flex-col justify-center items-center relative bg-white">
-        <h1 tw="text-6xl text-center">{PROJECT_TITLE}</h1>
-        <h3 tw="text-2xl">{PROJECT_DESCRIPTION}</h3>
+        <h1 tw="text-6xl text-center">Finish LUM Agentic MVP</h1>
+        <h3 tw="text-2xl">Countdown to completing LUM Agentic MVP</h3>
       </div>
     ),
     {
